@@ -8,7 +8,7 @@
 
   
 <h3 align="center">I'm a passionate software developer specializing in web development and data analysis. I love building creative solutions and contributing to open-source projects. Outside of coding, I enjoy exploring new technologies and learning about machine learning.</h3>
-<br/><br/>
+<br><br>
 
 
 - 🌱 I’m currently learning **MERN stack, Angular, Python, Java**
@@ -37,7 +37,7 @@
   <a href="https://github.com/harshalekamge">
     <img align="center" src="https://github-readme-stats.vercel.app/api?username=harshalekamge&show_icons=true&hide_border=true&title_color=94b4a4&amp&icon_color=FFFFFF&amp&text_color=FFFFFF&amp&bg_color=000000&count_private=true&include_all_commits=true" width = 420px/>
   </a>
-  <br>
+  <br><br>
   <a href="https://github.com/harshalekamge">
     <img align="center" width = "420px" height="195px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=harshalekamge&text_color=FFFFFF&bg_color=000000&title_color=94b4a4&langs_count=15&layout=compact&hide_border=true"  />
   </a>
