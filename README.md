@@ -2,6 +2,11 @@
 <p align='center'>
 </p><br/>
   
+<p align='center'>
+<img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&size=25&center=true&vCenter=true&width=433&height=75&lines=Ctrl+Alt+Del;Restarting+with+Passion;Exploring+the+Art+of+Code;Crafting+Solutions;Innovative+Thinker;Lifelong+Learner;@harshalekamge">
+</p>
+
+  
 <h3 align="center">I'm a passionate software developer specializing in web development and data analysis. I love building creative solutions and contributing to open-source projects. Outside of coding, I enjoy exploring new technologies and learning about machine learning.</h3>
 <br/><br/>
 
