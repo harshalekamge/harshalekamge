@@ -1,9 +1,19 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-2026-11-26-503e32-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./assets/profile-2026-11-26-503e32-light.svg" />
-    <img src="./assets/profile-2026-11-26-503e32-light.svg" width="100%" alt="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-2026-11-26-4b7633-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/profile-2026-11-26-4b7633-light.svg" />
+    <img src="./assets/profile-2026-11-26-4b7633-light.svg" width="100%" alt="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
   </picture>
+</p>
+
+<p align="center">
+  <a href="https://portfolio.harshalekamge.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-2026-11-26-4b7633-dark.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="./assets/footer-2026-11-26-4b7633-light.svg" />
+      <img src="./assets/footer-2026-11-26-4b7633-light.svg" width="100%" alt="Let's build something lasting. Visit portfolio.harshalekamge.com" />
+    </picture>
+  </a>
 </p>
 
 ```text

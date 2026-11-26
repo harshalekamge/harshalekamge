@@ -68,9 +68,9 @@ def gap_grids(t, y, h):
 def main():
     today = datetime.datetime.now(TZ).date()
     stamp = today.isoformat()
-    for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")):
+    for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")) + glob.glob(os.path.join(ROOT, "assets", "footer-*.svg")):
         os.remove(f)
-    out = {}
+    out, feet = {}, {}
     for t in banner.TH:
         top = banner.build(t, date_card(today, t))
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
@@ -97,22 +97,25 @@ def main():
         y += gap
         cs, ch = contact.build(t)
         parts.append(cs.replace("{Y}", f"{y:.1f}"))
-        y += ch - 1
+        total = y + ch
         ft, fh = footer.build(t)
-        parts.append(ft.replace("{Y}", f"{y:.1f}"))
-        total = y + fh
+        feet[t] = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {fh}" width="1000" height="{fh}" role="img" '
+                   f'aria-label="Let\u2019s build something lasting. Visit portfolio.harshalekamge.com">{ft.replace("{Y}", "0")}</svg>')
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}{"".join(parts)}</svg>')
         out[t] = svg
-    tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
+    tag = hashlib.sha1(("".join(out.values()) + "".join(feet.values())).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
     for t, svg in out.items():
         with open(os.path.join(ROOT, "assets", f"{name}-{t}.svg"), "w") as fh:
             fh.write(svg)
+        with open(os.path.join(ROOT, "assets", f"footer-{stamp}-{tag}-{t}.svg"), "w") as fh:
+            fh.write(feet[t])
     readme = os.path.join(ROOT, "README.md")
     s = open(readme, encoding="utf-8").read()
     s = re.sub(r"profile-\d{4}-\d{2}-\d{2}(?:-[0-9a-f]{6})?-(light|dark)\.svg", lambda m: f"{name}-{m.group(1)}.svg", s)
+    s = re.sub(r"footer-\d{4}-\d{2}-\d{2}-[0-9a-f]{6}-(light|dark)\.svg", lambda m: f"footer-{stamp}-{tag}-{m.group(1)}.svg", s)
     open(readme, "w", encoding="utf-8").write(s)
 
 
