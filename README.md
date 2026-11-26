@@ -29,15 +29,15 @@
     </td>
     <td>
       <b>Languages</b><br/>
-      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=light" /><img src="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=light" alt="Languages" /></picture><br/><br/>
+      <img src="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8" alt="Languages" /><br/><br/>
       <b>Frontend</b><br/>
-      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=light" /><img src="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=light" alt="Frontend" /></picture><br/><br/>
+      <img src="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9" alt="Frontend" /><br/><br/>
       <b>Backend &amp; Data</b><br/>
-      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=light" /><img src="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=light" alt="Backend and data" /></picture><br/><br/>
+      <img src="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11" alt="Backend and data" /><br/><br/>
       <b>AI &amp; Vision</b><br/>
-      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=light" /><img src="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=light" alt="AI and vision" /></picture><br/><br/>
+      <img src="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3" alt="AI and vision" /><br/><br/>
       <b>Tools &amp; Cloud</b><br/>
-      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=light" /><img src="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=light" alt="Tools" /></picture>
+      <img src="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11" alt="Tools" />
     </td>
   </tr>
 </table>
