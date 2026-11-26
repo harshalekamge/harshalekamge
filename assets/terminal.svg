@@ -28,12 +28,12 @@
 
   <!-- $ whoami -->
   <g clip-path="url(#k1)"><text x="20" y="80"><tspan class="p">➜</tspan><tspan class="k"> ~ </tspan><tspan class="w">whoami</tspan></text></g>
-  <text class="ln a1" x="20" y="104"><tspan class="w">Harsha Lekamge</tspan><tspan class="d"> — software engineer, founder &amp; builder · Sri Lanka</tspan></text>
+  <text class="ln a1" x="20" y="104"><tspan class="w">Harsha Lekamge</tspan><tspan class="d"> — software engineer &amp; builder · Sri Lanka</tspan></text>
 
   <!-- $ cat profile.json -->
   <g clip-path="url(#k2)"><text x="20" y="146"><tspan class="p">➜</tspan><tspan class="k"> ~ </tspan><tspan class="w">cat profile.json</tspan></text></g>
   <text class="ln a2 d" x="20" y="170">{</text>
-  <text class="ln a3" x="36" y="192"><tspan class="k">"founder"</tspan><tspan class="d">  : </tspan><tspan class="s">"One Billion Labs (CEO), Quintolink"</tspan><tspan class="d">,</tspan></text>
+  <text class="ln a3" x="36" y="192"><tspan class="k">"focus"</tspan><tspan class="d">    : </tspan><tspan class="s">"full-stack web apps &amp; AI"</tspan><tspan class="d">,</tspan></text>
   <text class="ln a4" x="36" y="214"><tspan class="k">"builds"</tspan><tspan class="d">   : </tspan><tspan class="s">"web platforms, gov systems, AI agents"</tspan><tspan class="d">,</tspan></text>
   <text class="ln a5" x="36" y="236"><tspan class="k">"research"</tspan><tspan class="d"> : </tspan><tspan class="s">"Kola — vision AI for accessibility"</tspan><tspan class="d">,</tspan></text>
   <text class="ln a6" x="36" y="258"><tspan class="k">"stack"</tspan><tspan class="d">    : </tspan><tspan class="s">["React", "Next.js", "Spring", "Python"]</tspan><tspan class="d">,</tspan></text>
