@@ -49,13 +49,13 @@ def main():
     for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")):
         os.remove(f)
     for t in banner.TH:
-        top = base64.b64encode(banner.build(t, date_card(today, t)).encode()).decode()
+        top = banner.build(t, date_card(today, t))
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
             bottom = base64.b64encode(fh.read()).decode()
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {460 + ph:.1f}" width="1000" height="{460 + ph:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
-               f'<image x="0" y="0" width="1000" height="460" href="data:image/svg+xml;base64,{top}"/>'
+               f'{top}'
                f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/></svg>')
         with open(os.path.join(ROOT, "assets", f"profile-{stamp}-{t}.svg"), "w") as fh:
             fh.write(svg)
