@@ -46,6 +46,24 @@ def date_card(today, t, x=26, y=26, w=176):
     return "".join(o)
 
 
+def gap_grids(t, y, h):
+    """Banner's fine grid fades out while the poster's big squares fade in, inside the gap."""
+    fine = banner.TH[t]["grid"]
+    big = "#bdb8ad" if t == "light" else "#262c36"
+    k = 1000 / 820                  # poster scale
+    x0, cell = 20 * k, 60 * k       # poster grid origin and cell size
+    y2 = y + h + x0 + 1              # down to the poster's top frame line
+    cols = "".join(f'<line x1="{x0 + i * cell:.1f}" y1="{y}" x2="{x0 + i * cell:.1f}" y2="{y2:.1f}"/>' for i in range(14))
+    return (f'<defs><pattern id="gfine" width="12" height="12" patternUnits="userSpaceOnUse" y="{y}">'
+            f'<path d="M12 0H0V12" fill="none" stroke="{fine}" stroke-width="1"/></pattern>'
+            f'<linearGradient id="gfo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+            f'<linearGradient id="gfi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>'
+            f'<mask id="mfo" maskContentUnits="userSpaceOnUse"><rect x="0" y="{y}" width="1000" height="{h}" fill="url(#gfo)"/></mask>'
+            f'<mask id="mfi" maskContentUnits="userSpaceOnUse"><rect x="0" y="{y}" width="1000" height="{y2 - y:.1f}" fill="url(#gfi)"/></mask></defs>'
+            f'<rect x="0" y="{y}" width="1000" height="{h}" fill="url(#gfine)" mask="url(#mfo)"/>',
+            f'<g stroke="{big}" stroke-width="{k:.2f}" mask="url(#mfi)">{cols}</g>')
+
+
 def main():
     today = datetime.datetime.now(TZ).date()
     stamp = today.isoformat()
@@ -58,13 +76,15 @@ def main():
             bottom = base64.b64encode(fh.read()).decode()
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
         gap = 70
+        fine_g, big_g = gap_grids(t, 459, 72)
         a, b = banner.TH[t]["bg2"], ("#ffffff" if t == "light" else "#0d1117")
         y = 460
         parts = [f'<linearGradient id="gapg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{a}"/>'
                  f'<stop offset="1" stop-color="{b}"/></linearGradient>'
-                 f'<rect x="0" y="{y - 1}" width="1000" height="{gap + 2}" fill="url(#gapg)"/>']
+                 f'<rect x="0" y="{y - 1}" width="1000" height="{gap + 2}" fill="url(#gapg)"/>'
+                 + fine_g]
         y += gap
-        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>')
+        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>' + big_g)
         y += ph - 1
         tl, th = tools.build(t)
         parts.append(tl.replace("{Y}", f"{y:.1f}"))
