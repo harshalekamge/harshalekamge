@@ -27,9 +27,3 @@
     <img src="./assets/stack-light.svg" width="100%" alt="Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
   </picture>
 </p>
-
-<br/>
-
-<p align="center">
-  <img src="./assets/octocat-trail.png" width="70%" alt="Octocat on the trail" />
-</p>
