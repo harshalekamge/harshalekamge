@@ -86,8 +86,8 @@ def build(t):
     o.append(txt(CX, CY - 22, "Things I&#8217;ve built.", 72, T["ink"], 700, extra="letter-spacing:-3px", length=640))
     o.append(txt(CX, CY + 28, "Real interfaces from real projects — designed, coded and shipped,", 19, T["muted"], length=560))
     o.append(txt(CX, CY + 54, f'one screen at a time. <tspan fill="{T["accent"]}">Infinitely.</tspan>', 19, T["muted"]))
-    names = "10 PROJECTS  ·  WEB  ·  AI  ·  DATA  ·  VISION"
-    o.append(f'<rect x="{CX - 215}" y="{CY + 82}" width="430" height="40" rx="20" fill="{T["btn"]}"/>')
-    o.append(txt(CX, CY + 108, names, 13, T["btnt"], 700, font=MONO, extra="letter-spacing:1px", length=380))
+    names = "WEB  ·  AI  ·  DATA  ·  VISION"
+    o.append(f'<rect x="{CX - 155}" y="{CY + 82}" width="310" height="40" rx="20" fill="{T["btn"]}"/>')
+    o.append(txt(CX, CY + 108, names, 13, T["btnt"], 700, font=MONO, extra="letter-spacing:1px", length=260))
     o.append('</svg>')
     return "".join(o), H
