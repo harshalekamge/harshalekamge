@@ -20,6 +20,16 @@
 
 <br/>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/makers-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/makers-light.svg" />
+    <img src="./assets/makers-light.svg" width="85%" alt="Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
+  </picture>
+</p>
+
+<br/>
+
 ## 🛠️ Toolbox <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="30px" alt="gear" />
 
 <table align="center">
