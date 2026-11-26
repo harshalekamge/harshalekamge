@@ -5,9 +5,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SANS = "'Helvetica Neue',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 TH = {
-    "light": dict(bg="#ffffff", line="#e3e3e3", ray="#ececec", ink="#141414", muted="#5c5c5c", accent="#e2582a",
+    "light": dict(edge="#cfcfcf", bg="#ffffff", line="#e3e3e3", ray="#ececec", ink="#141414", muted="#5c5c5c", accent="#e2582a",
                   btn="#141414", btnt="#ffffff", fade="#ffffff"),
-    "dark": dict(bg="#0d1117", line="#262d37", ray="#1c232c", ink="#e6edf3", muted="#9da7b3", accent="#ff7a45",
+    "dark": dict(edge="#30363d", bg="#0d1117", line="#262d37", ray="#1c232c", ink="#e6edf3", muted="#9da7b3", accent="#ff7a45",
                  btn="#e6edf3", btnt="#0d1117", fade="#0d1117"),
 }
 W, H = 1000, 780
@@ -26,6 +26,9 @@ def wall(side, s, t):
     return CX + HW * s * t, CY - HH * s  # ceiling
 
 
+EDGE = ["#cfcfcf"]
+
+
 def panel(side, near, far, t1, t2, img, idx, opacity=1):
     P = lambda s, t: wall(side, s, t)
     if side == "left":
@@ -42,7 +45,8 @@ def panel(side, near, far, t1, t2, img, idx, opacity=1):
     data = base64.b64encode(open(os.path.join(ROOT, "assets", "showcase", img), "rb").read()).decode()
     return (f'<clipPath id="sc{idx}"><polygon points="{pts}"/></clipPath>'
             f'<g clip-path="url(#sc{idx})" opacity="{opacity}"><image width="1" height="1" preserveAspectRatio="xMidYMid slice" '
-            f'transform="{m}" href="data:image/jpeg;base64,{data}"/></g>')
+            f'transform="{m}" href="data:image/jpeg;base64,{data}"/></g>'
+            f'<polygon points="{pts}" fill="none" stroke="{EDGE[0]}" stroke-width="1" opacity="{opacity}"/>')
 
 
 def txt(x, y, s, size, fill, weight=400, anchor="middle", font=SANS, extra="", length=None):
@@ -53,6 +57,7 @@ def txt(x, y, s, size, fill, weight=400, anchor="middle", font=SANS, extra="", l
 
 def build(t):
     T = TH[t]
+    EDGE[0] = T["edge"]
     o = [f'<svg x="0" y="{{Y}}" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
          '<style>.tun{transform-origin:500px 390px;animation:tz 9s ease-in-out infinite alternate}'
          '@keyframes tz{from{transform:scale(1)}to{transform:scale(1.035)}}</style>',
@@ -63,13 +68,16 @@ def build(t):
     for s in DEPTHS[1:]:
         o.append(f'<rect x="{CX - HW * s:.1f}" y="{CY - HH * s:.1f}" width="{2 * HW * s:.1f}" height="{2 * HH * s:.1f}" fill="none" stroke="{T["line"]}"/>')
     # screenshots on the walls
-    o += [panel("left", 1, .8, -.62, .05, "ceylonima.jpg", 1),
-          panel("right", .92, .72, -.05, .72, "velora.jpg", 2),
-          panel("floor", .9, .7, -.2, .3, "shoes.jpg", 3),
-          panel("ceiling", .95, .78, .2, .7, "shoes-screens.jpg", 4, .95),
-          panel("left", .63, .52, .25, .75, "velora.jpg", 5, .55),
-          panel("right", .7, .58, -.85, -.35, "ceylonima.jpg", 6, .55),
-          panel("ceiling", .62, .52, -.6, -.15, "shoes.jpg", 7, .45)]
+    o += [panel("left", 1, .8, -.78, -.08, "smart-campus.jpg", 1),
+          panel("left", .8, .63, .1, .78, "greencycle.jpg", 2, .85),
+          panel("left", .63, .5, -.75, -.1, "file-tracking-system.jpg", 3, .6),
+          panel("right", 1, .8, .05, .78, "kola-vision.jpg", 4),
+          panel("right", .8, .63, -.8, -.12, "cart-recovery-ai.jpg", 5, .85),
+          panel("right", .63, .5, .15, .8, "offer-suggestor.jpg", 6, .6),
+          panel("ceiling", 1, .8, -.62, -.06, "eroc-ccms.jpg", 7),
+          panel("ceiling", .8, .63, .12, .72, "roc-it-inventory.jpg", 8, .85),
+          panel("floor", 1, .8, .08, .66, "portfolio.jpg", 9),
+          panel("floor", .8, .63, -.72, -.1, "restaurant-cancellations.jpg", 10, .85)]
     o.append('</g>')
     # soft centre so the headline reads cleanly
     o.append(f'<defs><radialGradient id="scf" cx=".5" cy=".5" r=".5"><stop offset=".55" stop-color="{T["fade"]}" stop-opacity=".95"/>'
@@ -78,8 +86,8 @@ def build(t):
     o.append(txt(CX, CY - 22, "Things I&#8217;ve built.", 72, T["ink"], 700, extra="letter-spacing:-3px", length=640))
     o.append(txt(CX, CY + 28, "Real interfaces from real projects — designed, coded and shipped,", 19, T["muted"], length=560))
     o.append(txt(CX, CY + 54, f'one screen at a time. <tspan fill="{T["accent"]}">Infinitely.</tspan>', 19, T["muted"]))
-    names = "SALOON CEYLONIMA  ·  SALOON VELORA  ·  SALES SHOE MART"
-    o.append(f'<rect x="{CX - 255}" y="{CY + 82}" width="510" height="40" rx="20" fill="{T["btn"]}"/>')
-    o.append(txt(CX, CY + 108, names, 13, T["btnt"], 700, font=MONO, extra="letter-spacing:1px", length=450))
+    names = "10 PROJECTS  ·  WEB  ·  AI  ·  DATA  ·  VISION"
+    o.append(f'<rect x="{CX - 215}" y="{CY + 82}" width="430" height="40" rx="20" fill="{T["btn"]}"/>')
+    o.append(txt(CX, CY + 108, names, 13, T["btnt"], 700, font=MONO, extra="letter-spacing:1px", length=380))
     o.append('</svg>')
     return "".join(o), H
