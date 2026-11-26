@@ -22,9 +22,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/makers-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./assets/makers-light.svg" />
-    <img src="./assets/makers-light.svg" width="85%" alt="Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/stack-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/stack-light.svg" />
+    <img src="./assets/stack-light.svg" width="85%" alt="Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
   </picture>
 </p>
 
