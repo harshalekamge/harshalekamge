@@ -26,6 +26,11 @@
 +94 77 875 3792
 ```
 
+**03 / Email**
+```text
+lekamge.h2024@gmail.com
+```
+
 </td>
 <td width="50%">
 <img src="./assets/spacer.png" width="360" height="1" alt="" />
@@ -33,6 +38,11 @@
 **02 / Email**
 ```text
 harshalekamge.official@gmail.com
+```
+
+**04 / Portfolio**
+```text
+https://portfolio.harshalekamge.com/
 ```
 
 </td>
