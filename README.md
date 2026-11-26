@@ -48,28 +48,6 @@ https://portfolio.harshalekamge.com/
 </td>
 </tr>
 </table>
-<table width="100%">
-<tr>
-<td width="50%">
-<img src="./assets/spacer.png" width="360" height="1" alt="" />
-
-**03 / Email**
-```text
-lekamge.h2024@gmail.com
-```
-
-</td>
-<td width="50%">
-<img src="./assets/spacer.png" width="360" height="1" alt="" />
-
-**04 / Portfolio**
-```text
-https://portfolio.harshalekamge.com/
-```
-
-</td>
-</tr>
-</table>
 
 <p align="center">
   <a href="https://portfolio.harshalekamge.com/">Portfolio</a> &nbsp;·&nbsp;
