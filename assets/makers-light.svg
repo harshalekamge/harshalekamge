@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 20 780 960" width="780" height="960" role="img" aria-label="Everything around you that you call life was made up by people that were no smarter than you. Steve Jobs">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 1000" width="820" height="1000" role="img" aria-label="Everything around you that you call life was made up by people that were no smarter than you. Steve Jobs">
 <style>
 .t{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:38px;letter-spacing:-1px;fill:#111111}
 .s{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:1.5px;fill:#5c5a55}
@@ -21,6 +21,7 @@
 </style>
 <rect width="820" height="1000" fill="#e8e4da"/>
 <g stroke="#bdb8ad" stroke-width="1">
+<line x1="20" y1="20" x2="20" y2="980"/>
 <line x1="80" y1="20" x2="80" y2="980"/>
 <line x1="140" y1="20" x2="140" y2="980"/>
 <line x1="200" y1="20" x2="200" y2="980"/>
@@ -33,6 +34,8 @@
 <line x1="620" y1="20" x2="620" y2="980"/>
 <line x1="680" y1="20" x2="680" y2="980"/>
 <line x1="740" y1="20" x2="740" y2="980"/>
+<line x1="800" y1="20" x2="800" y2="980"/>
+<line x1="20" y1="20" x2="800" y2="20"/>
 <line x1="20" y1="80" x2="800" y2="80"/>
 <line x1="20" y1="140" x2="800" y2="140"/>
 <line x1="20" y1="200" x2="800" y2="200"/>
@@ -48,6 +51,7 @@
 <line x1="20" y1="800" x2="800" y2="800"/>
 <line x1="20" y1="860" x2="800" y2="860"/>
 <line x1="20" y1="920" x2="800" y2="920"/>
+<line x1="20" y1="980" x2="800" y2="980"/>
 </g>
 <rect x="80.5" y="80.5" width="299" height="179" fill="#e8e4da"/>
 <text class="t" x="90" y="124"><tspan x="90" dy="0">EVERYTHING</tspan><tspan x="90" dy="42">AROUND</tspan><tspan x="90" dy="42">YOU</tspan></text>
