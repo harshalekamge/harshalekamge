@@ -104,7 +104,7 @@ def main():
                f'role="img" aria-label="Dive into my code. Many tools, one calm workflow. Things I have built.">'
                f'{top}{"".join(parts)}</svg>')
         out[t] = svg
-        ends[t] = closing.build(t, today.year, text=False)
+        ends[t] = closing.build(t, today.year)
     tag = hashlib.sha1(("".join(out.values()) + "".join(feet.values()) + "".join(ends.values())).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
     for t, svg in out.items():
@@ -119,7 +119,6 @@ def main():
     s = re.sub(r"profile-\d{4}-\d{2}-\d{2}(?:-[0-9a-f]{6})?-(light|dark)\.svg", lambda m: f"{name}-{m.group(1)}.svg", s)
     s = re.sub(r"footer-\d{4}-\d{2}-\d{2}-[0-9a-f]{6}-(light|dark)\.svg", lambda m: f"footer-{stamp}-{tag}-{m.group(1)}.svg", s)
     s = re.sub(r"bottom-\d{4}-\d{2}-\d{2}-[0-9a-f]{6}-(light|dark)\.svg", lambda m: f"bottom-{stamp}-{tag}-{m.group(1)}.svg", s)
-    s = re.sub(r"© \d{4} Harsha Lekamge\.", f"© {today.year} Harsha Lekamge.", s)
     open(readme, "w", encoding="utf-8").write(s)
 
 
