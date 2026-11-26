@@ -23,4 +23,4 @@ jobs:
           git config user.name "Harsha Lekamge"
           git config user.email "lekamge.h2024@gmail.com"
           git add -A assets README.md
-          git diff --cached --quiet || (git commit -m "Update date card" && git push)
+          git diff --cached --quiet || (git commit -m "Update banner date" && git push)
