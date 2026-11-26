@@ -30,32 +30,19 @@ def fish_cells(seed,kind,L=20,H=7.5,tail=7):
                 col='pale' if rnd.random()<.75 else ('orange' if kind!='yamabuki' and rnd.random()<.4 else ('yellow' if kind=='yamabuki' else 'cream'))
             if i<0 and rnd.random()<.25: continue
             cells.append((i,y,col,i<0))
-    # fins: swept-back fans, a larger pair near the head and a small pair mid-body
-    def edge(i):
-        t=i/L
-        h=max(H*(max(t,0.001)**0.55)*((1-t)**0.3),1.2)
-        return int(1.08*h)
-    for side in (1,-1):
-        e=edge(13)
-        for k,xs in ((1,range(11,15)),(2,range(10,13)),(3,range(9,11))):
-            for fx in xs: cells.append((fx,side*(e+k),'fin','fin+' if side>0 else 'fin-'))
-        e=edge(6)
-        for k,xs in ((1,range(4,7)),(2,range(3,5))):
-            for fx in xs: cells.append((fx,side*(e+k),'fin','fin+' if side>0 else 'fin-'))
+    # pectoral fins
+    for (fx,fy) in [(13,5),(14,5),(13,-5),(14,-5),(14,6),(14,-6),(13,6),(13,-6)]:
+        if fx<=L: cells.append((fx,fy,'pale',False))
     return cells
 CH={'cream':':.x:.:','pale':'..::','orange':'ZXZ%Z','black':'X#X','yellow':'ZXZ'}
 def fish(T,cells,seed,cls,tid):
-    rnd=random.Random(seed+7); body=[]; tail=[]; fins={'fin+':[],'fin-':[]}
+    rnd=random.Random(seed+7); body=[]; tail=[]
     for (i,y,col,ist) in cells:
         x=i*S; yy=y*S
-        c=col if col!='fin' else 'pale'
-        ch=rnd.choice(CH[c])
-        s=f'<rect x="{x}" y="{yy}" width="{S-1}" height="{S-1}" rx="2" fill="{T[c]}"/><text x="{x+5.5}" y="{yy+8.5}" fill="{T[c+"c"]}">{ch}</text>'
-        if ist in fins: fins[ist].append(s)
-        else: (tail if ist else body).append(s)
-    return (f'<g class="{cls}"><g class="tail">{"".join(tail)}</g>'
-            f'<g class="finA" opacity=".8">{"".join(fins["fin+"])}</g><g class="finB" opacity=".8">{"".join(fins["fin-"])}</g>'
-            f'{"".join(body)}<rect x="{17*S+3}" y="{-2*S+3}" width="5" height="5" fill="{T["black"]}"/></g>')
+        ch=rnd.choice(CH[col])
+        s=f'<rect x="{x}" y="{yy}" width="{S-1}" height="{S-1}" rx="2" fill="{T[col]}"/><text x="{x+5.5}" y="{yy+8.5}" fill="{T[col+"c"]}">{ch}</text>'
+        (tail if ist else body).append(s)
+    return f'<g class="{cls}"><g class="tail">{"".join(tail)}</g>{"".join(body)}<rect x="{17*S+3}" y="{-2*S+3}" width="5" height="5" fill="{T["black"]}"/></g>'
 def build(t, overlay=''):
     T=TH[t]; o=[]; a=o.append
     W,Hh=1000,460
@@ -73,7 +60,7 @@ text{{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size
 .hint{{font-size:12.5px;fill:{T['muted']};text-anchor:start}}
 .chip{{font-family:Inter,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px;fill:{T['chipt']};text-anchor:middle}}
 .tail{{transform-box:fill-box;transform-origin:100% 50%;animation:wag 1.1s ease-in-out infinite alternate}}
-@keyframes wag{{from{{transform:rotate(-9deg)}}to{{transform:rotate(9deg)}}}}\n.finA{{transform-box:fill-box;transform-origin:100% 0;animation:fa .9s ease-in-out infinite alternate}}\n.finB{{transform-box:fill-box;transform-origin:100% 100%;animation:fb .9s ease-in-out infinite alternate}}\n@keyframes fa{{from{{transform:rotate(-7deg)}}to{{transform:rotate(6deg)}}}}@keyframes fb{{from{{transform:rotate(7deg)}}to{{transform:rotate(-6deg)}}}}
+@keyframes wag{{from{{transform:rotate(-9deg)}}to{{transform:rotate(9deg)}}}}
 .sway{{transform-box:fill-box;transform-origin:50% 50%;animation:sway 3.2s ease-in-out infinite alternate}}
 @keyframes sway{{from{{transform:translateY(-10px) rotate(-3deg)}}to{{transform:translateY(10px) rotate(3deg)}}}}
 .swimR{{animation:swimR linear infinite}} @keyframes swimR{{from{{transform:translateX(-420px)}}to{{transform:translateX(1100px)}}}}
