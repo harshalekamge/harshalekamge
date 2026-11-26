@@ -8,7 +8,7 @@ import contact
 import showcase
 import tools
 import shelf
-import quote
+import codeposter
 import footer
 import bottom as closing
 
@@ -94,7 +94,7 @@ def main():
         bs, bh = shelf.build(t)
         parts.append(bs.replace("{Y}", f"{y:.1f}"))
         y += bh - 1
-        qs, qh = quote.build(t)
+        qs, qh = codeposter.build(t)
         parts.append(qs.replace("{Y}", f"{y:.1f}"))
         y += qh - 1
         sc, sh = showcase.build(t)
