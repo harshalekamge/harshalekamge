@@ -19,7 +19,7 @@
 @keyframes bl{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
-<defs><linearGradient id="pbg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e8e4da"/></linearGradient></defs>
+<defs><linearGradient id="pbg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#ffffff"/></linearGradient></defs>
 <rect width="820" height="1000" fill="url(#pbg)"/>
 <g stroke="#bdb8ad" stroke-width="1">
 <line x1="20" y1="20" x2="20" y2="980"/>

@@ -5,7 +5,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SANS = "'Helvetica Neue',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 TH = {
-    "light": dict(top="#e8e4da", bg="#ffffff", ink="#141414", muted="#3a3a3a", line="#141414", sh=".18",
+    "light": dict(top="#ffffff", bg="#ffffff", ink="#141414", muted="#3a3a3a", line="#141414", sh=".18",
                   chip="#ffffff", chipt="#141414"),
     "dark": dict(top="#0d1117", bg="#0d1117", ink="#e6edf3", muted="#c9d1d9", line="#e6edf3", sh=".6",
                  chip="#161b22", chipt="#e6edf3"),
