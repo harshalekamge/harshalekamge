@@ -5,6 +5,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import banner
 import keys
+import contact
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = ZoneInfo("Asia/Colombo")
@@ -57,11 +58,13 @@ def main():
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
         kb, kh = keys.build(t)
         kb = kb.replace("{Y}", f"{460 + ph - 1:.1f}")
-        total = 460 + ph + kh - 1
+        cs, ch = contact.build(t)
+        cs = cs.replace("{Y}", f"{460 + ph - 1 + kh - 1:.1f}")
+        total = 460 + ph + kh - 1 + ch - 1
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}'
-               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{kb}</svg>')
+               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{kb}{cs}</svg>')
         out[t] = svg
     tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
