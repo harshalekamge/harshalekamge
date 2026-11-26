@@ -37,6 +37,8 @@ harshalekamge.official@gmail.com
 
 </td>
 </tr>
+</table>
+<table width="100%">
 <tr>
 <td width="50%">
 <img src="./assets/spacer.png" width="360" height="1" alt="" />
