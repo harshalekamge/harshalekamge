@@ -30,9 +30,12 @@ def fish_cells(seed,kind,L=20,H=7.5,tail=7):
                 col='pale' if rnd.random()<.75 else ('orange' if kind!='yamabuki' and rnd.random()<.4 else ('yellow' if kind=='yamabuki' else 'cream'))
             if i<0 and rnd.random()<.25: continue
             cells.append((i,y,col,i<0))
-    # pectoral fins
-    for (fx,fy) in [(13,5),(14,5),(13,-5),(14,-5),(14,6),(14,-6),(13,6),(13,-6)]:
+    # pectoral fins: the top pair as before; the bottom pair sweeps back like a fin
+    for (fx,fy) in [(13,-5),(14,-5),(14,-6),(13,-6)]:
         if fx<=L: cells.append((fx,fy,'pale',False))
+    e=int(1.08*max(H*((13/L)**0.55)*((1-13/L)**0.3),1.2))
+    for k,xs in ((1,range(11,15)),(2,range(10,13)),(3,range(9,11))):
+        for fx in xs: cells.append((fx,e+k,'pale',False))
     return cells
 CH={'cream':':.x:.:','pale':'..::','orange':'ZXZ%Z','black':'X#X','yellow':'ZXZ'}
 def fish(T,cells,seed,cls,tid):
