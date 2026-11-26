@@ -5,9 +5,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SANS = "'Helvetica Neue',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 TH = {
-    "light": dict(edge="#cfcfcf", bg="#ffffff", line="#e3e3e3", ray="#ececec", ink="#141414", muted="#5c5c5c", accent="#e2582a",
+    "light": dict(top="#e8e4da", edge="#cfcfcf", bg="#ffffff", line="#e3e3e3", ray="#ececec", ink="#141414", muted="#5c5c5c", accent="#e2582a",
                   btn="#141414", btnt="#ffffff", fade="#ffffff"),
-    "dark": dict(edge="#30363d", bg="#0d1117", line="#262d37", ray="#1c232c", ink="#e6edf3", muted="#9da7b3", accent="#ff7a45",
+    "dark": dict(top="#0d1117", edge="#30363d", bg="#0d1117", line="#262d37", ray="#1c232c", ink="#e6edf3", muted="#9da7b3", accent="#ff7a45",
                  btn="#e6edf3", btnt="#0d1117", fade="#0d1117"),
 }
 W, H = 1000, 780
@@ -61,7 +61,8 @@ def build(t):
     o = [f'<svg x="0" y="{{Y}}" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
          '<style>.tun{transform-origin:500px 390px;animation:tz 9s ease-in-out infinite alternate}'
          '@keyframes tz{from{transform:scale(1)}to{transform:scale(1.035)}}</style>',
-         f'<rect width="{W}" height="{H}" fill="{T["bg"]}"/><g class="tun">']
+         f'<linearGradient id="shg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["top"]}"/><stop offset=".3" stop-color="{T["bg"]}"/></linearGradient>'
+         f'<rect width="{W}" height="{H}" fill="url(#shg)"/><g class="tun">']
     # rays from the vanishing point
     for fx, fy in [(-1, -1), (1, -1), (1, 1), (-1, 1), (-.45, -1), (.45, -1), (-.45, 1), (.45, 1), (-1, -.3), (1, -.3), (-1, .35), (1, .35)]:
         o.append(f'<line x1="{CX + HW * .4 * fx:.1f}" y1="{CY + HH * .4 * fy:.1f}" x2="{CX + HW * 1.2 * fx:.1f}" y2="{CY + HH * 1.2 * fy:.1f}" stroke="{T["ray"]}"/>')
