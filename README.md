@@ -24,3 +24,7 @@
   <a href="mailto:harshalekamge.official@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/pills/mail-official-v1-dark.svg" /><img src="./assets/pills/mail-official-v1-light.svg" alt="harshalekamge.official@gmail.com" /></picture></a>
   <a href="mailto:lekamge.h2024@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/pills/mail-personal-v1-dark.svg" /><img src="./assets/pills/mail-personal-v1-light.svg" alt="lekamge.h2024@gmail.com" /></picture></a>
 </p>
+
+<p align="center">
+  📧 <code>harshalekamge.official@gmail.com</code> &nbsp;·&nbsp; <code>lekamge.h2024@gmail.com</code> &nbsp;·&nbsp; 📱 <code>+94 77 875 3792</code>
+</p>
