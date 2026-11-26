@@ -7,6 +7,7 @@ import banner
 import contact
 import showcase
 import tools
+import footer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = ZoneInfo("Asia/Colombo")
@@ -96,7 +97,10 @@ def main():
         y += gap
         cs, ch = contact.build(t)
         parts.append(cs.replace("{Y}", f"{y:.1f}"))
-        total = y + ch
+        y += ch - 1
+        ft, fh = footer.build(t)
+        parts.append(ft.replace("{Y}", f"{y:.1f}"))
+        total = y + fh
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}{"".join(parts)}</svg>')
