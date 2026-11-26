@@ -26,6 +26,14 @@
   </picture>
 </p>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/date-2026-11-26-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/date-2026-11-26-light.svg" />
+    <img src="./assets/date-2026-11-26-light.svg" width="60%" alt="Today's date" />
+  </picture>
+</p>
+
 <br/>
 
 <p align="center">
