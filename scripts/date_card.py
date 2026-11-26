@@ -8,6 +8,7 @@ import contact
 import showcase
 import tools
 import footer
+import bottom as closing
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = ZoneInfo("Asia/Colombo")
@@ -68,9 +69,9 @@ def gap_grids(t, y, h):
 def main():
     today = datetime.datetime.now(TZ).date()
     stamp = today.isoformat()
-    for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")) + glob.glob(os.path.join(ROOT, "assets", "footer-*.svg")):
+    for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")) + glob.glob(os.path.join(ROOT, "assets", "footer-*.svg")) + glob.glob(os.path.join(ROOT, "assets", "bottom-*.svg")):
         os.remove(f)
-    out, feet = {}, {}
+    out, feet, ends = {}, {}, {}
     for t in banner.TH:
         top = banner.build(t, date_card(today, t))
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
@@ -85,8 +86,6 @@ def main():
                  f'<rect x="0" y="{y - 1}" width="1000" height="{gap + 2}" fill="url(#gapg)"/>'
                  + fine_g]
         y += gap
-        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>')
-        y += ph - 1
         tl, th = tools.build(t)
         parts.append(tl.replace("{Y}", f"{y:.1f}"))
         y += th - 1
@@ -102,20 +101,24 @@ def main():
         feet[t] = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {fh}" width="1000" height="{fh}" role="img" '
                    f'aria-label="Let\u2019s build something lasting. Visit portfolio.harshalekamge.com">{ft.replace("{Y}", "0")}</svg>')
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
-               f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
+               f'role="img" aria-label="Dive into my code. Many tools, one calm workflow. Things I have built.">'
                f'{top}{"".join(parts)}</svg>')
         out[t] = svg
-    tag = hashlib.sha1(("".join(out.values()) + "".join(feet.values())).encode()).hexdigest()[:6]
+        ends[t] = closing.build(t, today.year)
+    tag = hashlib.sha1(("".join(out.values()) + "".join(feet.values()) + "".join(ends.values())).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
     for t, svg in out.items():
         with open(os.path.join(ROOT, "assets", f"{name}-{t}.svg"), "w") as fh:
             fh.write(svg)
         with open(os.path.join(ROOT, "assets", f"footer-{stamp}-{tag}-{t}.svg"), "w") as fh:
             fh.write(feet[t])
+        with open(os.path.join(ROOT, "assets", f"bottom-{stamp}-{tag}-{t}.svg"), "w") as fh:
+            fh.write(ends[t])
     readme = os.path.join(ROOT, "README.md")
     s = open(readme, encoding="utf-8").read()
     s = re.sub(r"profile-\d{4}-\d{2}-\d{2}(?:-[0-9a-f]{6})?-(light|dark)\.svg", lambda m: f"{name}-{m.group(1)}.svg", s)
     s = re.sub(r"footer-\d{4}-\d{2}-\d{2}-[0-9a-f]{6}-(light|dark)\.svg", lambda m: f"footer-{stamp}-{tag}-{m.group(1)}.svg", s)
+    s = re.sub(r"bottom-\d{4}-\d{2}-\d{2}-[0-9a-f]{6}-(light|dark)\.svg", lambda m: f"bottom-{stamp}-{tag}-{m.group(1)}.svg", s)
     open(readme, "w", encoding="utf-8").write(s)
 
 
