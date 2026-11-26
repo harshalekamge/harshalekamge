@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/pond-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/pond-light.svg" />
+    <img src="./assets/pond-light.svg" width="100%" alt="Dive into my code." />
+  </picture>
+</p>
+
 <h1 align="center">Hello Fellow &lt; Coders/ &gt;!<br>Hi, I'm Harsha Lekamge <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px" alt="wave" /></h1>
 
 <p align="center">
