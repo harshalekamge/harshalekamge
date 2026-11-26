@@ -40,10 +40,11 @@ def icon(name, x, y, col):
 
 def build(t, year):
     T = TH[t]
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
+    vy = 200  # start below where the text used to sit
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 {vy} {W} {H - vy}" width="{W}" height="{H - vy}" role="img" '
          f'aria-label="Harsha Lekamge — Software Engineer, Data Science at SLIIT. © {year} Harsha Lekamge.">',
          '<defs>'
-         f'<linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["top"]}"/><stop offset=".3" stop-color="{T["sky1"]}"/>'
+         f'<linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["top"]}"/><stop offset=".33" stop-color="{T["top"]}"/>'
          f'<stop offset=".55" stop-color="{T["sky2"]}"/><stop offset=".85" stop-color="{T["sky3"]}"/></linearGradient>'
          f'<linearGradient id="bh1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["h1a"]}"/><stop offset="1" stop-color="{T["h1b"]}"/></linearGradient>'
          f'<linearGradient id="bh2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["h2a"]}"/><stop offset="1" stop-color="{T["h2b"]}"/></linearGradient>'
@@ -76,23 +77,5 @@ def build(t, year):
              ("bh3", "M0 618C200 585 420 595 600 612S880 605 1000 595V640H0Z")]
     for g, d in hills:
         o.append(f'<path d="{d}" fill="url(#{g})"/><path d="{d}" fill="#000" filter="url(#bgr)" opacity=".5"/>')
-    # top content
-    o.append(f'<rect x="44" y="52" width="40" height="40" rx="10" fill="{T["ink"]}"/>')
-    o.append(txt(64, 79, "HL", 16, T["top"], 700, "middle"))
-    o.append(txt(96, 82, "Harsha Lekamge", 25, T["ink"], 500, extra="letter-spacing:-.5px"))
-    o.append(txt(44, 126, "Software engineer and Data Science undergraduate", 14.5, T["muted"]))
-    o.append(txt(44, 147, "at SLIIT — building software that ships.", 14.5, T["muted"]))
-    for i, n in enumerate(["github", "whatsapp", "mail", "globe"]):
-        o.append(icon(n, 44 + i * 32, 172, T["ink"]))
-    cols = [("Work", ["Smart Campus", "Kola Vision", "GreenCycle.lk", "File Tracking"]),
-            ("Skills", ["Web Apps", "AI &amp; Vision", "Data Science", "UI Design"]),
-            ("Connect", ["Portfolio", "WhatsApp", "Email", "GitHub"]),
-            ("Studying", ["SLIIT", "BSc (Hons) IT", "Data Science"])]
-    for i, (head, items) in enumerate(cols):
-        x = 470 + i * 135
-        o.append(txt(x, 78, head, 15.5, T["ink"], 600))
-        for j, it in enumerate(items):
-            o.append(txt(x, 113 + j * 33, it, 14, T["muted"]))
-    o.append(txt(470, 278, f"© {year} Harsha Lekamge.", 14, T["ink"], 500))
     o.append('</svg>')
     return "".join(o)
