@@ -58,7 +58,7 @@ def gap_grids(t, y, h):
     x0, cell = 20 * k, 60 * k       # poster grid origin and cell size
     y2 = y + h + x0 + 1              # down to the poster's top frame line
     cols = "".join(f'<line x1="{x0 + i * cell:.1f}" y1="{y}" x2="{x0 + i * cell:.1f}" y2="{y2:.1f}"/>' for i in range(14))
-    return (f'<defs><pattern id="gfine" width="12" height="12" patternUnits="userSpaceOnUse" y="{y}">'
+    return (f'<defs><pattern id="gfine" width="12" height="12" patternUnits="userSpaceOnUse">'
             f'<path d="M12 0H0V12" fill="none" stroke="{fine}" stroke-width="1"/></pattern>'
             f'<linearGradient id="gfo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
             f'<linearGradient id="gfi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>'
