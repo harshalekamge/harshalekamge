@@ -11,7 +11,7 @@
 ## ⚡ `whoami`
 
 <p align="center">
-  <img src="./assets/terminal.svg" width="70%" alt="Terminal: whoami and profile.json" />
+  <img src="./assets/terminal.svg?v=2" width="70%" alt="Terminal: whoami and profile.json" />
 </p>
 
 <br/>
