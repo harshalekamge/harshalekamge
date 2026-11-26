@@ -43,6 +43,31 @@ def date_card(today, t, x=26, y=26, w=176):
     return "".join(o)
 
 
+PILL_ROWS = [["name", "degree"], ["portfolio", "focus", "whatsapp"], ["github", "location", "kola"],
+             ["mail-official", "mail-personal"]]
+PILL_BG = {"light": "#f4f4f3", "dark": "#0d1117"}
+
+
+def pills_panel(t, y0, scale=1.25, gap=6, pad=26):
+    """Lays the contact pills out in centred rows; returns (svg, height)."""
+    o, y = [], y0 + pad
+    for row in PILL_ROWS:
+        items = []
+        for name in row:
+            path = glob.glob(os.path.join(ROOT, "assets", "pills", f"{name}-v*-{t}.svg"))[0]
+            raw = open(path, "rb").read()
+            w, h = (float(v) for v in re.search(rb'width="([\d.]+)" height="([\d.]+)"', raw).groups())
+            items.append((w * scale, h * scale, base64.b64encode(raw).decode()))
+        total = sum(w for w, _, _ in items) + gap * (len(items) - 1)
+        x = (1000 - total) / 2
+        for w, h, b in items:
+            o.append(f'<image x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" href="data:image/svg+xml;base64,{b}"/>')
+            x += w + gap
+        y += max(h for _, h, _ in items) + 2
+    height = y - y0 + pad
+    return f'<rect x="0" y="{y0:.1f}" width="1000" height="{height:.1f}" fill="{PILL_BG[t]}"/>' + "".join(o), height
+
+
 def main():
     today = datetime.datetime.now(TZ).date()
     stamp = today.isoformat()
@@ -54,10 +79,12 @@ def main():
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
             bottom = base64.b64encode(fh.read()).decode()
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
-        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {460 + ph:.1f}" width="1000" height="{460 + ph:.1f}" '
+        panel, pl = pills_panel(t, 460 + ph)
+        total = 460 + ph + pl
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}'
-               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/></svg>')
+               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{panel}</svg>')
         out[t] = svg
     tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
