@@ -85,7 +85,7 @@ def main():
                  f'<rect x="0" y="{y - 1}" width="1000" height="{gap + 2}" fill="url(#gapg)"/>'
                  + fine_g]
         y += gap
-        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>' + big_g)
+        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>')
         y += ph - 1
         tl, th = tools.build(t)
         parts.append(tl.replace("{Y}", f"{y:.1f}"))

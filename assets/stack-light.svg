@@ -21,7 +21,8 @@
 </style>
 <defs><linearGradient id="pbg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#ffffff"/></linearGradient></defs>
 <rect width="820" height="1000" fill="url(#pbg)"/>
-<g stroke="#bdb8ad" stroke-width="1">
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="55"/></filter><mask id="edge" maskUnits="userSpaceOnUse" x="0" y="0" width="820" height="1000"><rect x="95" y="95" width="630" height="810" fill="#fff" filter="url(#soft)"/></mask>
+<g stroke="#bdb8ad" stroke-width="1" mask="url(#edge)">
 <line x1="20" y1="20" x2="20" y2="980"/>
 <line x1="80" y1="20" x2="80" y2="980"/>
 <line x1="140" y1="20" x2="140" y2="980"/>
