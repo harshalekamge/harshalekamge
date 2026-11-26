@@ -38,12 +38,13 @@ def icon(name, x, y, col):
     return f'<path transform="translate({x} {y}) scale(.8)" fill="none" stroke="{col}" stroke-width="1.9" stroke-linejoin="round" d="{d}"/>'
 
 
-def build(t, year):
+def build(t, year, text=False):
     T = TH[t]
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
+    vy = 0 if text else 200
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 {vy} {W} {H - vy}" width="{W}" height="{H - vy}" role="img" '
          f'aria-label="Harsha Lekamge — Software Engineer, Data Science at SLIIT. © {year} Harsha Lekamge.">',
          '<defs>'
-         f'<linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["top"]}"/><stop offset=".3" stop-color="{T["sky1"]}"/>'
+         f'<linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["top"]}"/><stop offset=".33" stop-color="{T["top"]}"/>'
          f'<stop offset=".55" stop-color="{T["sky2"]}"/><stop offset=".85" stop-color="{T["sky3"]}"/></linearGradient>'
          f'<linearGradient id="bh1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["h1a"]}"/><stop offset="1" stop-color="{T["h1b"]}"/></linearGradient>'
          f'<linearGradient id="bh2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{T["h2a"]}"/><stop offset="1" stop-color="{T["h2b"]}"/></linearGradient>'
@@ -76,6 +77,9 @@ def build(t, year):
              ("bh3", "M0 618C200 585 420 595 600 612S880 605 1000 595V640H0Z")]
     for g, d in hills:
         o.append(f'<path d="{d}" fill="url(#{g})"/><path d="{d}" fill="#000" filter="url(#bgr)" opacity=".5"/>')
+    if not text:
+        o.append('</svg>')
+        return "".join(o)
     # top content
     o.append(f'<rect x="44" y="52" width="40" height="40" rx="10" fill="{T["ink"]}"/>')
     o.append(txt(64, 79, "HL", 16, T["top"], 700, "middle"))
