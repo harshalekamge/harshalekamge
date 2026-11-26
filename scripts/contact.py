@@ -73,6 +73,6 @@ def build(t, width=1000):
     o.append(txt(442, 342, "SEARCH", 13, T["btnt"], 700, "middle", MONO, "letter-spacing:1px"))
     # degree
     o.append(txt(60, 404, "BSc (Hons) in Information Technology", 17, T["ink"], 600))
-    o.append(txt(60, 428, "Specialised in Data Science", 16, T["muted"]))
+    o.append(txt(60, 428, "Specialised in Data Science — SLIIT", 16, T["muted"]))
     o.append('</svg>')
     return "".join(o), H

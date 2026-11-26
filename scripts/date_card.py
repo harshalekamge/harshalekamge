@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import banner
 import contact
 import showcase
+import tools
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = ZoneInfo("Asia/Colombo")
@@ -56,15 +57,17 @@ def main():
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
             bottom = base64.b64encode(fh.read()).decode()
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
+        tl, th = tools.build(t)
+        tl = tl.replace("{Y}", f"{460 + ph - 1:.1f}")
         sc, sh = showcase.build(t)
-        sc = sc.replace("{Y}", f"{460 + ph - 1:.1f}")
+        sc = sc.replace("{Y}", f"{460 + ph - 1 + th - 1:.1f}")
         cs, ch = contact.build(t)
-        cs = cs.replace("{Y}", f"{460 + ph - 1 + sh - 1:.1f}")
-        total = 460 + ph + sh - 1 + ch - 1
+        cs = cs.replace("{Y}", f"{460 + ph - 1 + th - 1 + sh - 1:.1f}")
+        total = 460 + ph + th - 1 + sh - 1 + ch - 1
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}'
-               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{sc}{cs}</svg>')
+               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{tl}{sc}{cs}</svg>')
         out[t] = svg
     tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
