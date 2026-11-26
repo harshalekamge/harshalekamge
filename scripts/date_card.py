@@ -97,6 +97,8 @@ def main():
         qs, qh = codeposter.build(t)
         parts.append(qs.replace("{Y}", f"{y:.1f}"))
         y += qh - 1
+        parts.append(f'<rect x="0" y="{y:.1f}" width="1000" height="{gap + 2}" fill="{b}"/>')
+        y += gap
         sc, sh = showcase.build(t)
         parts.append(sc.replace("{Y}", f"{y:.1f}"))
         y += sh - 1
