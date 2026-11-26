@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://portfolio.harshalekamge.com/">
+  <a href="https://portfolio-kappa-azure-bhhoh68iit.vercel.app/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-2026-11-26-e0747d-dark.svg" />
       <source media="(prefers-color-scheme: light)" srcset="./assets/footer-2026-11-26-e0747d-light.svg" />
