@@ -11,7 +11,11 @@
 ## ⚡ `whoami`
 
 <p align="center">
-  <img src="./assets/whoami.svg" width="70%" alt="Terminal: whoami and profile.json" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/whoami-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/whoami-light.svg" />
+    <img src="./assets/whoami-light.svg" width="70%" alt="Terminal: whoami and profile.json" />
+  </picture>
 </p>
 
 <br/>
@@ -25,15 +29,15 @@
     </td>
     <td>
       <b>Languages</b><br/>
-      <img src="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8" alt="Languages" /><br/><br/>
+      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=light" /><img src="https://skillicons.dev/icons?i=java,py,js,ts,c,cpp,kotlin,php&perline=8&theme=light" alt="Languages" /></picture><br/><br/>
       <b>Frontend</b><br/>
-      <img src="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9" alt="Frontend" /><br/><br/>
+      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=light" /><img src="https://skillicons.dev/icons?i=react,nextjs,vite,tailwind,materialui,html,css,threejs,astro&perline=9&theme=light" alt="Frontend" /></picture><br/><br/>
       <b>Backend &amp; Data</b><br/>
-      <img src="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11" alt="Backend and data" /><br/><br/>
+      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=light" /><img src="https://skillicons.dev/icons?i=spring,nodejs,express,flask,fastapi,prisma,mongodb,mysql,postgres,firebase,supabase&perline=11&theme=light" alt="Backend and data" /></picture><br/><br/>
       <b>AI &amp; Vision</b><br/>
-      <img src="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3" alt="AI and vision" /><br/><br/>
+      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=light" /><img src="https://skillicons.dev/icons?i=pytorch,sklearn,opencv&perline=3&theme=light" alt="AI and vision" /></picture><br/><br/>
       <b>Tools &amp; Cloud</b><br/>
-      <img src="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11" alt="Tools" />
+      <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=light" /><img src="https://skillicons.dev/icons?i=git,github,githubactions,docker,vercel,gcp,postman,figma,electron,wordpress,androidstudio&perline=11&theme=light" alt="Tools" /></picture>
     </td>
   </tr>
 </table>
