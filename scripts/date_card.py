@@ -1,5 +1,5 @@
 """Draws today's banner: koi pond with a date card, then points the README at it."""
-import base64, calendar, datetime, glob, os, re, sys
+import base64, calendar, hashlib, datetime, glob, os, re, sys
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +48,7 @@ def main():
     stamp = today.isoformat()
     for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")):
         os.remove(f)
+    out = {}
     for t in banner.TH:
         top = banner.build(t, date_card(today, t))
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
@@ -57,11 +58,15 @@ def main():
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
                f'{top}'
                f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/></svg>')
-        with open(os.path.join(ROOT, "assets", f"profile-{stamp}-{t}.svg"), "w") as fh:
+        out[t] = svg
+    tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
+    name = f"profile-{stamp}-{tag}"
+    for t, svg in out.items():
+        with open(os.path.join(ROOT, "assets", f"{name}-{t}.svg"), "w") as fh:
             fh.write(svg)
     readme = os.path.join(ROOT, "README.md")
     s = open(readme, encoding="utf-8").read()
-    s = re.sub(r"profile-\d{4}-\d{2}-\d{2}-(light|dark)\.svg", lambda m: f"profile-{stamp}-{m.group(1)}.svg", s)
+    s = re.sub(r"profile-\d{4}-\d{2}-\d{2}(?:-[0-9a-f]{6})?-(light|dark)\.svg", lambda m: f"{name}-{m.group(1)}.svg", s)
     open(readme, "w", encoding="utf-8").write(s)
 
 
