@@ -1,1 +1,7 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/banner-2026-11-26-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="./assets/banner-2026-11-26-light.svg" /><img src="./assets/banner-2026-11-26-light.svg" width="100%" alt="Dive into my code." /></picture><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/stack-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="./assets/stack-light.svg" /><img src="./assets/stack-light.svg" width="100%" alt="Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" /></picture></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-2026-11-26-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/profile-2026-11-26-light.svg" />
+    <img src="./assets/profile-2026-11-26-light.svg" width="100%" alt="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you. — Steve Jobs" />
+  </picture>
+</p>

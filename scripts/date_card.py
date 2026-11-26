@@ -1,5 +1,5 @@
 """Draws today's banner: koi pond with a date card, then points the README at it."""
-import calendar, datetime, glob, os, re, sys
+import base64, calendar, datetime, glob, os, re, sys
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -46,14 +46,22 @@ def date_card(today, t, x=26, y=26, w=176):
 def main():
     today = datetime.datetime.now(TZ).date()
     stamp = today.isoformat()
-    for f in glob.glob(os.path.join(ROOT, "assets", "banner-*.svg")):
+    for f in glob.glob(os.path.join(ROOT, "assets", "profile-*.svg")):
         os.remove(f)
     for t in banner.TH:
-        with open(os.path.join(ROOT, "assets", f"banner-{stamp}-{t}.svg"), "w") as fh:
-            fh.write(banner.build(t, date_card(today, t)))
+        top = base64.b64encode(banner.build(t, date_card(today, t)).encode()).decode()
+        with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
+            bottom = base64.b64encode(fh.read()).decode()
+        ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {460 + ph:.1f}" width="1000" height="{460 + ph:.1f}" '
+               f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
+               f'<image x="0" y="0" width="1000" height="460" href="data:image/svg+xml;base64,{top}"/>'
+               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/></svg>')
+        with open(os.path.join(ROOT, "assets", f"profile-{stamp}-{t}.svg"), "w") as fh:
+            fh.write(svg)
     readme = os.path.join(ROOT, "README.md")
     s = open(readme, encoding="utf-8").read()
-    s = re.sub(r"banner-\d{4}-\d{2}-\d{2}-(light|dark)\.svg", lambda m: f"banner-{stamp}-{m.group(1)}.svg", s)
+    s = re.sub(r"profile-\d{4}-\d{2}-\d{2}-(light|dark)\.svg", lambda m: f"profile-{stamp}-{m.group(1)}.svg", s)
     open(readme, "w", encoding="utf-8").write(s)
 
 
