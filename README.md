@@ -87,7 +87,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/harshalekamge">
-    <img src="https://github-readme-stats.vercel.app/api?username=harshalekamge&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&bg_color=0b1020&title_color=22E3A0&icon_color=9f8cff&text_color=c9d1d9&ring_color=7B61FF" height="170" alt="GitHub stats" />
+    <img src="https://github-readme-stats.vercel.app/api?username=harshalekamge&show_icons=true&count_private=true&hide_border=true&bg_color=0b1020&title_color=22E3A0&icon_color=9f8cff&text_color=c9d1d9&ring_color=7B61FF" height="170" alt="GitHub stats" />
     <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=harshalekamge&layout=compact&langs_count=10&hide_border=true&bg_color=0b1020&title_color=22E3A0&text_color=c9d1d9" height="170" alt="Top languages" />
   </a>
 </p>
