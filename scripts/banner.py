@@ -1,7 +1,7 @@
 """Koi pond banner (light + dark)."""
 import math, random
 S=12  # cell
-TH={'light':dict(bg1='#fbfbfa',bg2='#e9e9e7',grid='#e6e6e3',ink='#1c1c1c',muted='#8a8a8a',card='#ffffff',cardo='.86',cstroke='#e4e4e2',chip='#ffffff',chipo='.7',chipt='#6b6b6b',btn='#ececec',btnt='#333',
+TH={'light':dict(bg1='#ffffff',bg2='#ffffff',grid='#e6e6e3',ink='#1c1c1c',muted='#8a8a8a',card='#ffffff',cardo='.86',cstroke='#e4e4e2',chip='#ffffff',chipo='.7',chipt='#6b6b6b',btn='#ececec',btnt='#333',
              cream='#f1efea',creamc='#9c9a94',pale='#e3e2de',palec='#b5b3ad',black='#2a2a2a',blackc='#9a9a9a',orange='#e2582a',orangec='#ffd6c4',yellow='#d6b21c',yellowc='#fff3b0'),
     'dark':dict(bg1='#0d1117',bg2='#0a0d12',grid='#161c25',ink='#e6edf3',muted='#7d8590',card='#161b22',cardo='.88',cstroke='#30363d',chip='#161b22',chipo='.8',chipt='#9da7b3',btn='#21262d',btnt='#c9d1d9',
              cream='#c9cfd6',creamc='#5d6570',pale='#2a313b',palec='#59626e',black='#05070a',blackc='#59626e',orange='#e2582a',orangec='#ffd6c4',yellow='#d6b21c',yellowc='#fff3b0')}

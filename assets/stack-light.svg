@@ -19,7 +19,7 @@
 @keyframes bl{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
-<rect width="820" height="1000" fill="#e8e4da"/>
+<rect width="820" height="1000" fill="#ffffff"/>
 <g stroke="#bdb8ad" stroke-width="1">
 <line x1="20" y1="20" x2="20" y2="980"/>
 <line x1="80" y1="20" x2="80" y2="980"/>
@@ -53,13 +53,13 @@
 <line x1="20" y1="920" x2="800" y2="920"/>
 <line x1="20" y1="980" x2="800" y2="980"/>
 </g>
-<rect x="80.5" y="80.5" width="299" height="179" fill="#e8e4da"/>
+<rect x="80.5" y="80.5" width="299" height="179" fill="#ffffff"/>
 <text class="t" x="90" y="124"><tspan x="90" dy="0">EVERYTHING</tspan><tspan x="90" dy="42">AROUND</tspan><tspan x="90" dy="42">YOU</tspan></text>
-<rect x="380.5" y="320.5" width="299" height="119" fill="#e8e4da"/>
+<rect x="380.5" y="320.5" width="299" height="119" fill="#ffffff"/>
 <text class="t" x="390" y="364"><tspan x="390" dy="0">THAT YOU</tspan><tspan x="390" dy="42">CALL LIFE</tspan></text>
-<rect x="200.5" y="560.5" width="299" height="179" fill="#e8e4da"/>
+<rect x="200.5" y="560.5" width="299" height="179" fill="#ffffff"/>
 <text class="t" x="210" y="604"><tspan x="210" dy="0">WAS</tspan><tspan x="210" dy="42">MADE UP BY</tspan><tspan x="210" dy="42">PEOPLE</tspan></text>
-<rect x="440.5" y="740.5" width="299" height="179" fill="#e8e4da"/>
+<rect x="440.5" y="740.5" width="299" height="179" fill="#ffffff"/>
 <text class="t" x="450" y="784"><tspan x="450" dy="0">THAT WERE</tspan><tspan x="450" dy="42">NO SMARTER</tspan><tspan x="450" dy="42">THAN YOU.</tspan></text>
 <text class="s" x="452" y="906">— STEVE JOBS, 1994</text>
 <text class="s" x="50" y="956">GITHUB.COM/HARSHALEKAMGE</text>
