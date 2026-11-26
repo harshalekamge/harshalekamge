@@ -8,7 +8,7 @@ TH={'light':dict(bg1='#ffffff',bg2='#ffffff',grid='#e6e6e3',ink='#1c1c1c',muted=
 def fish_cells(seed,kind,L=20,H=7.5,tail=7):
     rnd=random.Random(seed); cells=[]
     spots=[(rnd.uniform(.15,.95),rnd.uniform(-.6,.6),rnd.uniform(.12,.22),rnd.choice(['orange','orange','black'] if kind=='kohaku' else (['black','orange','orange'] if kind=='showa' else ['yellow']))) for _ in range(5)]
-    for i in range(-tail,L+1):
+    for i in range(0,L+1):
         t=i/L
         if i>=0:
             h=H*(max(t,0.001)**0.55)*((1-t)**0.3) if t<1 else 0.6
@@ -30,6 +30,17 @@ def fish_cells(seed,kind,L=20,H=7.5,tail=7):
                 col='pale' if rnd.random()<.75 else ('orange' if kind!='yamabuki' and rnd.random()<.4 else ('yellow' if kind=='yamabuki' else 'cream'))
             if i<0 and rnd.random()<.25: continue
             cells.append((i,y,col,i<0))
+    # shark-style crescent tail: two swept-back lobes, the upper one longer
+    def tcol(k,n):
+        if k>=n-1: return 'pale'
+        r=rnd.random()
+        if kind=='yamabuki': return 'yellow' if r<.6 else 'pale'
+        return 'orange' if r<.45 else ('pale' if r<.8 else 'cream')
+    for y in (-1,0,1): cells.append((-1,y,tcol(0,9),True))
+    for k in range(1,8):
+        for y in (-1-round(k*.85),-round(k*.85)): cells.append((-1-k,y,tcol(k,8),True))
+    for k in range(1,6):
+        for y in (1+round(k*.85),round(k*.85)): cells.append((-1-k,y,tcol(k,6),True))
     # pectoral fins: the top pair as before; the bottom pair sweeps back like a fin
     for (fx,fy) in [(13,-5),(14,-5),(14,-6),(13,-6)]:
         if fx<=L: cells.append((fx,fy,'pale',False))
