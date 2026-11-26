@@ -57,17 +57,29 @@ def main():
         with open(os.path.join(ROOT, "assets", f"stack-{t}.svg"), "rb") as fh:
             bottom = base64.b64encode(fh.read()).decode()
         ph = 1000 * 1000 / 820  # poster is 820x1000, scaled to the banner's width
+        gap = 70
+        a, b = banner.TH[t]["bg2"], ("#ffffff" if t == "light" else "#0d1117")
+        y = 460
+        parts = [f'<linearGradient id="gapg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{a}"/>'
+                 f'<stop offset="1" stop-color="{b}"/></linearGradient>'
+                 f'<rect x="0" y="{y - 1}" width="1000" height="{gap + 2}" fill="url(#gapg)"/>']
+        y += gap
+        parts.append(f'<image x="0" y="{y:.1f}" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>')
+        y += ph - 1
         tl, th = tools.build(t)
-        tl = tl.replace("{Y}", f"{460 + ph - 1:.1f}")
+        parts.append(tl.replace("{Y}", f"{y:.1f}"))
+        y += th - 1
         sc, sh = showcase.build(t)
-        sc = sc.replace("{Y}", f"{460 + ph - 1 + th - 1:.1f}")
+        parts.append(sc.replace("{Y}", f"{y:.1f}"))
+        y += sh - 1
+        parts.append(f'<rect x="0" y="{y:.1f}" width="1000" height="{gap + 2}" fill="{b}"/>')
+        y += gap
         cs, ch = contact.build(t)
-        cs = cs.replace("{Y}", f"{460 + ph - 1 + th - 1 + sh - 1:.1f}")
-        total = 460 + ph + th - 1 + sh - 1 + ch - 1
+        parts.append(cs.replace("{Y}", f"{y:.1f}"))
+        total = y + ch
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {total:.1f}" width="1000" height="{total:.1f}" '
                f'role="img" aria-label="Dive into my code. Everything around you that you call life was made up by people that were no smarter than you.">'
-               f'{top}'
-               f'<image x="0" y="460" width="1000" height="{ph:.1f}" href="data:image/svg+xml;base64,{bottom}"/>{tl}{sc}{cs}</svg>')
+               f'{top}{"".join(parts)}</svg>')
         out[t] = svg
     tag = hashlib.sha1("".join(out.values()).encode()).hexdigest()[:6]
     name = f"profile-{stamp}-{tag}"
