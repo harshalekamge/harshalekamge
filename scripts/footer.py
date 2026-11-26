@@ -8,7 +8,7 @@ TH = {
     "dark": dict(bg="#0d1117", dot="#232a33", ink="#e6edf3", grey="#7d8590", muted="#9da7b3", sketch="#5d6570",
                  blue="#7c8bff", bluefill="#1c2147", panel="#0d1117", line="#21262d", card="#161b22", btn="#e6edf3", btnt="#0d1117"),
 }
-W, H = 1000, 930
+W, H = 1000, 760
 
 
 def txt(x, y, s, size, fill, weight=400, anchor="start", font=SANS, extra=""):
@@ -74,17 +74,8 @@ def build(t):
     o.append(txt(px + 30, 622, "( GET IN TOUCH )", 11, T["muted"], 500, font=MONO, extra="letter-spacing:1px"))
     o.append(txt(px + 30, 676, "Let&#8217;s talk —", 40, T["ink"], extra="letter-spacing:-1.2px"))
     o.append(txt(px + 30, 722, "any way you like.", 40, T["ink"], extra="letter-spacing:-1.2px"))
-    for i, line in enumerate(["Reach me on WhatsApp, by phone or by email.", "Everything is copyable right below this card,",
+    for i, line in enumerate(["Reach me on WhatsApp, by phone or by email.", "Everything is one click to copy, just below,",
                               "and my work lives on my portfolio."]):
         o.append(txt(660, 664 + i * 22, line, 15, T["muted"]))
-    cards = [("01 / WhatsApp &amp; Phone", "+94 77 875 3792"), ("02 / Email", "harshalekamge.official@gmail.com"),
-             ("03 / Email", "lekamge.h2024@gmail.com"), ("04 / Portfolio", "portfolio.harshalekamge.com")]
-    cw, ch, gap = (W - px - 44 - 10) / 2, 66, 10
-    for i, (title, val) in enumerate(cards):
-        x = px + 22 + (i % 2) * (cw + gap)
-        y = 762 + (i // 2) * (ch + gap)
-        o.append(f'<rect x="{x:.1f}" y="{y}" width="{cw:.1f}" height="{ch}" rx="4" fill="{T["card"]}"/>')
-        o.append(txt(f"{x + 16:.1f}", y + 25, title, 13, T["muted"]))
-        o.append(txt(f"{x + 16:.1f}", y + 50, val, 15, T["ink"], 500, font=MONO))
     o.append('</svg>')
     return "".join(o), H
