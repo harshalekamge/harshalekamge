@@ -37,7 +37,7 @@ def blob(cells, ox, oy, u, fill, r=16, cls=""):
 
 def build(t, width=1000):
     T = TH[t]
-    H = 600
+    H = 480
     o = [f'<svg x="0" y="{{Y}}" width="{width}" height="{H}" viewBox="0 0 {width} {H}">',
          '<style>.cb{animation:cb 1s steps(1) infinite}@keyframes cb{50%{fill-opacity:0}}'
          '.fl{animation:fl 5s ease-in-out infinite alternate}.fl2{animation:fl 6s ease-in-out infinite alternate-reverse}'
@@ -74,23 +74,5 @@ def build(t, width=1000):
     # degree
     o.append(txt(60, 404, "BSc (Hons) in Information Technology", 17, T["ink"], 600))
     o.append(txt(60, 428, "Specialised in Data Science", 16, T["muted"]))
-    # contact strip
-    y0 = 470
-    o.append(f'<path d="M0 {y0}H{width}" stroke="{T["line"]}"/>')
-    cells = [("GMAIL", "harshalekamge.official@gmail.com", "mail"), ("GMAIL", "lekamge.h2024@gmail.com", "mail"),
-             ("PHONE", "+94 77 875 3792", "phone")]
-    cw = width / 3
-    for i, (title, val, icon) in enumerate(cells):
-        x = i * cw
-        if i:
-            o.append(f'<path d="M{x} {y0}V{H}" stroke="{T["line"]}"/>')
-        ix, iy = x + 34, y0 + 40
-        o.append(f'<rect x="{ix}" y="{iy}" width="34" height="34" rx="8" fill="none" stroke="{T["ink"]}" stroke-width="1.5"/>')
-        if icon == "mail":
-            o.append(f'<g fill="none" stroke="{T["ink"]}" stroke-width="1.6" stroke-linejoin="round"><rect x="{ix + 8}" y="{iy + 11}" width="18" height="13" rx="2"/><path d="M{ix + 8} {iy + 13}l9 6 9-6"/></g>')
-        else:
-            o.append(f'<path transform="translate({ix + 8} {iy + 8}) scale(.75)" fill="{T["ink"]}" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/>')
-        o.append(txt(ix + 50, iy + 13, f"{title} ›", 14, T["ink"], 700, font=MONO, extra="letter-spacing:1px"))
-        o.append(txt(ix + 50, iy + 34, val, 14.5, T["muted"]))
     o.append('</svg>')
     return "".join(o), H
