@@ -9,6 +9,7 @@
 <table width="100%">
 <tr>
 <td width="50%">
+<img src="./assets/spacer.png" width="360" height="1" alt="" />
 
 **📧 Gmail**
 ```text
@@ -17,6 +18,7 @@ harshalekamge.official@gmail.com
 
 </td>
 <td width="50%">
+<img src="./assets/spacer.png" width="360" height="1" alt="" />
 
 **📧 Gmail**
 ```text
@@ -27,6 +29,7 @@ lekamge.h2024@gmail.com
 </tr>
 <tr>
 <td width="50%">
+<img src="./assets/spacer.png" width="360" height="1" alt="" />
 
 **📱 Phone**
 ```text
@@ -35,6 +38,7 @@ lekamge.h2024@gmail.com
 
 </td>
 <td width="50%">
+<img src="./assets/spacer.png" width="360" height="1" alt="" />
 
 **🎓 Degree**
 ```text
