@@ -6,9 +6,9 @@
   </picture>
 </p>
 
-<table align="center">
+<table width="100%">
 <tr>
-<td>
+<td width="50%">
 
 **📧 Gmail**
 ```text
@@ -16,7 +16,7 @@ harshalekamge.official@gmail.com
 ```
 
 </td>
-<td>
+<td width="50%">
 
 **📧 Gmail**
 ```text
@@ -24,11 +24,21 @@ lekamge.h2024@gmail.com
 ```
 
 </td>
-<td>
+</tr>
+<tr>
+<td width="50%">
 
 **📱 Phone**
 ```text
 +94 77 875 3792
+```
+
+</td>
+<td width="50%">
+
+**🎓 Degree**
+```text
+BSc (Hons) in IT · Data Science
 ```
 
 </td>
