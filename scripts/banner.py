@@ -68,7 +68,6 @@ text{{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size
 .typing{{transform-box:fill-box;transform-origin:0 0;animation:ty 9s steps(27) infinite}}
 @keyframes ty{{0%{{transform:scaleX(0)}}30%,92%{{transform:scaleX(1)}}100%{{transform:scaleX(0)}}}}
 .cur{{animation:bl 1s steps(1) infinite}} @keyframes bl{{50%{{opacity:0}}}}
-@media (prefers-reduced-motion:reduce){{*{{animation:none!important}}.typing{{transform:none}}}}
 </style>
 <rect width="{W}" height="{Hh}" fill="url(#bg)"/><rect width="{W}" height="{Hh}" fill="url(#g)"/>''')
     fishes=[('kohaku',3,'swimR',28,-6,70,1),('showa',11,'swimR',36,-26,330,.85),('yamabuki',5,'swimL',32,-12,390,.8),('kohaku',21,'swimL',44,-30,120,.65)]
