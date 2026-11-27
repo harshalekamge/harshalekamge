@@ -1,147 +1,226 @@
-"""Koi drawn frame by frame on the grid: bodies bend as they swim along looping paths (light + dark)."""
-import math, random
+"""Fine pixel-art koi (cross-stitch style) that bend and swim along looping paths.
 
-S = 12            # grid cell
-N = 48            # frames per loop
-CYCLE = 14        # seconds per loop
-W, H = 1000, 460
+Run `python3 scripts/koi.py` to regenerate assets/koi/koi-{light,dark}.frag (needs numpy).
+The banner just reads those files, so the nightly job doesn't need numpy.
+"""
+import math, os
+try:
+    import numpy as np          # only needed to regenerate the frames
+except ImportError:
+    np = None
 
-# tile palettes: (fill, character colour)
-PAL = {
-    "light": {"w": ("#ece9e3", "#8d887f"), "g": ("#cfcac1", "#5f5a50"), "d": ("#8e887d", "#ece8e0"),
-              "k": ("#4a453d", "#d9d4cb"), "o": ("#6f6a52", "#e9e4cf"), "f": ("#f3f1ed", "#b9b4ab")},
-    "dark": {"w": ("#c9ccd1", "#4b5058"), "g": ("#8f949c", "#1f242b"), "d": ("#5a6069", "#d0d5dc"),
-             "k": ("#2b3038", "#9aa3ad"), "o": ("#6f6a52", "#e9e4cf"), "f": ("#262c34", "#6b7480")},
-}
-ACCENT = {"light": ["#3f8f86", "#7c6bb0"], "dark": ["#5fc0b3", "#a596de"]}
-CHARS = "SX8%@tso:"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "assets", "koi")
+P = 5                 # pixel size
+W_, H_ = 1000, 460    # banner size
+N = 120               # frames per loop
+CYCLE = 40            # seconds per loop
+SWISH = 14            # tail swishes per loop
 
-# each koi: centre, radii and phase of its looping path, length (spine steps), width scale, colour style
+BG = {"light": (255, 255, 255), "dark": (13, 17, 23)}
+SHADOW = {"light": ("#000000", ".07"), "dark": ("#000000", ".45")}
+FIN_ALPHA = .8
+
+def hx(c): return "#%02x%02x%02x" % tuple(int(round(v)) for v in c)
+def rgb(h): return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+def mix(a, b, t): return tuple(a[i] * (1 - t) + b[i] * t for i in range(3))
+
+# varieties: body base/edge/dorsal, fins base/rays, patches (u, v, ru, rv, colour)
 KOI = [
-    dict(cx=260, cy=150, ax=210, ay=95, p=0.00, q=0.6, n=22, wid=1.0, style="spots"),
-    dict(cx=700, cy=260, ax=240, ay=130, p=0.35, q=1.9, n=24, wid=1.05, style="pale"),
-    dict(cx=520, cy=330, ax=330, ay=90, p=0.70, q=3.1, n=18, wid=.9, style="olive"),
+    dict(name="sanke", path="top", cx=500, cy=-60, ax=640, ay=175, ph=0.00, q=0, L=265, Wd=34,
+         base="#f4f3ef", edge="#cfd4da", dors="#e3e2dd", fin="#d3e0ec", ray="#b6c9da",
+         patches=[(.11, 0, .075, .95, "#d6392b"), (.38, .35, .07, .6, "#d6392b"), (.53, -.32, .06, .5, "#d6392b"),
+                  (.29, -.25, .08, .7, "#1c1d22"), (.46, .48, .06, .45, "#1c1d22"), (.63, .1, .06, .6, "#1c1d22")]),
+    dict(name="kohaku", path="fig8v", cx=868, cy=235, ax=92, ay=158, ph=0.37, q=0.4, L=245, Wd=32,
+         base="#f6f4f0", edge="#d3d6db", dors="#e5e3de", fin="#f2b2a3", ray="#e48b77",
+         patches=[(.15, 0, .12, 1.25, "#d03a2d"), (.37, .12, .1, 1.1, "#d03a2d"), (.57, -.15, .08, .95, "#d03a2d")]),
+    dict(name="karasu", path="bottom", cx=500, cy=578, ax=660, ay=165, ph=0.55, q=0, L=215, Wd=28,
+         base="#4b4d53", edge="#2c2e33", dors="#3a3c41", fin="#8a8d94", ray="#6c6f76",
+         patches=[(.3, 0, .25, .35, "#5f626a")]),
 ]
 
 
-def path(k, s):
-    a = 2 * math.pi * (s + k["p"])
-    return k["cx"] + k["ax"] * math.sin(a), k["cy"] + k["ay"] * math.sin(2 * a + k["q"])
+def half_width(u, Wd):
+    """Body half-width (px) at u (0 nose → 1 tail tip)."""
+    w = np.zeros_like(u)
+    a = (u >= 0) & (u < .14)
+    w[a] = Wd * .86 * np.sqrt(np.clip(1 - ((.14 - u[a]) / .14) ** 2, 0, 1))
+    b = (u >= .14) & (u < .32)
+    w[b] = Wd * (.86 + .14 * np.sin((u[b] - .14) / .18 * math.pi / 2))
+    c = (u >= .32) & (u < .8)
+    w[c] = Wd * (.17 + .83 * ((.8 - u[c]) / .48) ** 1.25)
+    d = u >= .8
+    w[d] = Wd * .17
+    return w
 
 
-def spine(k, s, step=6.0):
-    """Points from the head backwards along the path, spaced ~step px apart."""
-    pts, ds, cur = [path(k, s)], 1e-3, s
-    need = k["n"] * 2
-    while len(pts) < need:
-        cur -= ds
-        x, y = path(k, cur)
-        if math.dist((x, y), pts[-1]) >= step:
-            pts.append((x, y))
-    return pts
+def loop_polyline(k, n=6000):
+    s = np.linspace(0, 1, n, endpoint=False)
+    a = 2 * math.pi * (s + k["ph"])
+    if k["path"] == "top":        # bottom arc of a big ellipse above the banner
+        x, y = k["cx"] + k["ax"] * np.sin(a), k["cy"] + k["ay"] * np.cos(a)
+    elif k["path"] == "bottom":   # top arc of a big ellipse below the banner, swimming the other way
+        x, y = k["cx"] - k["ax"] * np.sin(a), k["cy"] - k["ay"] * np.cos(a)
+    else:                         # upright figure-eight
+        x, y = k["cx"] + k["ax"] * np.sin(2 * a + k["q"]), k["cy"] + k["ay"] * np.sin(a)
+    pts = np.stack([x, y], 1)
+    seg = np.linalg.norm(np.roll(pts, -1, 0) - pts, axis=1)
+    cum = np.concatenate([[0], np.cumsum(seg)])
+    return pts, cum
 
 
-def width(k, j):
-    """Half-width (in cells) at spine point j (two points per cell)."""
-    u = j / (k["n"] * 2)
-    if u < .1:    w = 1.6 + u / .1 * 1.3
-    elif u < .42: w = 2.9
-    elif u < .8:  w = 2.9 - (u - .42) / .38 * 2.3
-    else:         w = .6 + (u - .8) / .2 * 1.7      # tail fan
-    return w * k["wid"]
+def spine(k, poly, f):
+    pts, cum = poly
+    total = cum[-1]
+    head = f / N * total
+    ls = np.arange(0, k["L"] + 1e-6, 2.0)
+    arc = (head - ls) % total
+    x = np.interp(arc, cum[:-1], pts[:, 0], period=total)
+    y = np.interp(arc, cum[:-1], pts[:, 1], period=total)
+    sp = np.stack([x, y], 1)
+    tan = np.gradient(sp, axis=0) * -1          # pointing towards the head
+    tan /= np.linalg.norm(tan, axis=1, keepdims=True)
+    nor = np.stack([-tan[:, 1], tan[:, 0]], 1)
+    u = ls / k["L"]
+    sw = k["Wd"] * .55 * u ** 1.6 * np.sin(2 * math.pi * (u * 1.1 - f / N * SWISH))
+    sp = sp + nor * sw[:, None]
+    tan = np.gradient(sp, axis=0) * -1
+    tan /= np.linalg.norm(tan, axis=1, keepdims=True)
+    nor = np.stack([-tan[:, 1], tan[:, 0]], 1)
+    return sp, tan, nor, u
 
 
-def colour(k, j, lat, rnd):
-    u = j / (k["n"] * 2)
-    st = k["style"]
-    if u > .82:
-        return "f" if rnd.random() < .5 else "g"
-    if st == "olive":
-        return "o" if (j // 5 + (lat > 0)) % 3 else "k"
-    if st == "pale":
-        return "d" if ((j // 5) % 3 == 1 and lat > -0.5) else "w"
-    return "k" if ((j // 4) % 3 == 1 and abs(lat) < 1.6) else ("d" if (j // 6) % 2 else "g")
+def shade(k, U, V, D, inside_body, fin_mask, ray):
+    """Colour (hex) per sample point."""
+    out = np.full(U.shape, k["base"], dtype=object)
+    for (uc, vc, ru, rv, col) in k["patches"]:
+        wob = .22 * np.sin(23 * U + 7 * V + uc * 40)
+        m = inside_body & (((U - uc) / ru) ** 2 + ((V - vc) / rv) ** 2 < 1 + wob)
+        out[m] = col
+    dors = inside_body & (np.abs(V) < .1) & (U > .33) & (U < .62)
+    out[dors & (out == k["base"])] = k["dors"]
+    edge = inside_body & (np.abs(V) > .8)
+    for col in set(out[edge]):
+        m = edge & (out == col)
+        out[m] = hx(mix(rgb(col), rgb(k["edge"]) if col == k["base"] else (0, 0, 0), .35 if col == k["base"] else .22))
+    eye = inside_body & (U > .035) & (U < .075) & (np.abs(V) > .42) & (np.abs(V) < .72)
+    out[eye] = "#121215"
+    out[fin_mask] = np.where(ray[fin_mask], k["ray"], k["fin"])
+    return out
 
 
-def frame_cells(k, s, seed):
-    pts = spine(k, s)
-    cells = {}
-    for j, (x, y) in enumerate(pts):
-        w = width(k, j) * S
-        # direction of the body here, for the side offset (lat)
-        nx, ny = (pts[max(j - 1, 0)][0] - pts[min(j + 1, len(pts) - 1)][0],
-                  pts[max(j - 1, 0)][1] - pts[min(j + 1, len(pts) - 1)][1])
-        ln = math.hypot(nx, ny) or 1
-        px, py = -ny / ln, nx / ln
-        r = int(w // S) + 1
-        ci, cj = int(x // S), int(y // S)
-        for gi in range(ci - r - 1, ci + r + 2):
-            for gj in range(cj - r - 1, cj + r + 2):
-                cx, cy = gi * S + S / 2, gj * S + S / 2
-                d = math.dist((cx, cy), (x, y))
-                if d <= w + 1 and (gi, gj) not in cells:
-                    lat = ((cx - x) * px + (cy - y) * py) / S
-                    edge = d > w - S * .7
-                    cells[(gi, gj)] = (j, lat, edge)
-    # pectoral fins: a swept-back flap each side near the head
-    for side in (-1, 1):
-        j = int(k["n"] * 2 * .22)
-        x, y = pts[j]
-        nx, ny = pts[j - 1][0] - pts[j + 1][0], pts[j - 1][1] - pts[j + 1][1]
-        ln = math.hypot(nx, ny) or 1
-        ux, uy, px, py = nx / ln, ny / ln, -ny / ln, nx / ln
-        for a in range(1, 4):
-            for b in range(0, 4 - a + 1):
-                fx = x + side * px * (width(k, j) * S + a * S * .9) - ux * b * S * .9 - ux * a * S * .5
-                fy = y + side * py * (width(k, j) * S + a * S * .9) - uy * b * S * .9 - uy * a * S * .5
-                cells.setdefault((int(fx // S), int(fy // S)), (j + 40, side * 9, True))
-    # eyes
-    x, y = pts[2]
-    nx, ny = pts[0][0] - pts[4][0], pts[0][1] - pts[4][1]
-    ln = math.hypot(nx, ny) or 1
-    for side in (-1, 1):
-        ex, ey = x + side * (-ny / ln) * S * .9, y + side * (nx / ln) * S * .9
-        cells[(int(ex // S), int(ey // S))] = (-1, 0, False)
-    return cells
+def sample_fish(k, poly, f):
+    sp, tan, nor, u = spine(k, poly, f)
+    Wd, L = k["Wd"], k["L"]
+    lo = np.floor((sp.min(0) - 1.7 * Wd) / P).astype(int)
+    hi = np.ceil((sp.max(0) + 1.7 * Wd) / P).astype(int)
+    gx, gy = np.meshgrid(np.arange(lo[0], hi[0]), np.arange(lo[1], hi[1]), indexing="ij")
+    gx, gy = gx.ravel(), gy.ravel()
+    off = np.array([(.5, .5), (.17, .17), (.83, .17), (.17, .83), (.83, .83)])       # centre first
+    px = (gx[:, None] + off[None, :, 0]) * P
+    py = (gy[:, None] + off[None, :, 1]) * P
+    pts = np.stack([px.ravel(), py.ravel()], 1)
+    d2 = ((pts[:, None, :] - sp[None, :, :]) ** 2).sum(2)
+    i = d2.argmin(1)
+    rel = pts - sp[i]
+    along = (rel * tan[i]).sum(1)
+    lat = (rel * nor[i]).sum(1)
+    U = u[i] - along / L
+    w = half_width(np.clip(U, 0, 1), Wd)
+    V = np.where(w > 0, lat / np.maximum(w, 1e-6), 9)
+    body = (U >= 0) & (U <= .8) & (np.abs(lat) <= w)
+    # tail fin: crescent with a forked notch
+    tu = (U - .76) / .24
+    tw = Wd * (.18 + 1.05 * np.clip(tu, 0, 1) ** .9)
+    tail = (U > .76) & (np.abs(lat) <= tw) & (U <= .93 + .07 * np.clip(np.abs(lat) / np.maximum(tw, 1e-6), 0, 1))
+    tail_ray = (np.floor(np.abs(lat) / np.maximum(tw, 1e-6) * 5 + tu * 2) % 2) == 0
+    # pectoral (u .2) and pelvic (u .48) fins, swept back
+    fins = np.zeros_like(body)
+    fray = np.zeros_like(body)
+    for u0, ln, wd in ((.2, 1.3 * Wd, .45 * Wd), (.47, .7 * Wd, .28 * Wd)):
+        w0 = half_width(np.array([u0]), Wd)[0]
+        a = (U - u0) * L
+        o = np.abs(lat) - w0 * .82
+        ang = math.radians(42)
+        pp = o * math.cos(ang) + a * math.sin(ang)
+        qq = -o * math.sin(ang) + a * math.cos(ang)
+        prof = wd * np.sin(np.clip(pp / ln, 0, 1) * math.pi) ** .55
+        m = (o > -3) & (pp > 0) & (pp < ln) & (np.abs(qq) < prof) & ~body
+        fins |= m
+        fray |= m & ((np.floor((qq / np.maximum(pp, 2)) * 5) % 2) == 0)
+    finm = (fins | tail) & ~body
+    ray = np.where(tail & ~body, tail_ray, fray)
+    inside = body | finm
+    col = shade(k, U, V, lat, body, finm, ray)
+    return gx, gy, inside.reshape(-1, len(off)), col.reshape(-1, len(off)), finm.reshape(-1, len(off)), body.reshape(-1, len(off))
 
 
-def build(t):
-    P, acc = PAL[t], ACCENT[t]
-    rnd = random.Random(7)
-    # tile symbols: every colour × character (+ an accent version)
-    syms, sid = [], {}
-    for key, (fill, ch_col) in P.items():
-        for ch in CHARS:
-            for a in (None, 0, 1):
-                n = len(sid)
-                sid[(key, ch, a)] = n
-                syms.append(f'<symbol id="kt{n}" overflow="visible"><rect width="{S - 1}" height="{S - 1}" rx="2" fill="{fill}"/>'
-                            f'<text x="5.5" y="8.5" fill="{acc[a] if a is not None else ch_col}">{ch}</text></symbol>')
-    eye = len(sid)
-    syms.append(f'<symbol id="kt{eye}" overflow="visible"><rect width="{S - 1}" height="{S - 1}" rx="2" fill="{"#1c1a17" if t == "light" else "#0b0e12"}"/></symbol>')
-    o = [f'<defs>{"".join(syms)}</defs>',
-         f'<style>.kf{{opacity:0;animation:kf {CYCLE}s steps(1,end) infinite}}'
-         f'@keyframes kf{{0%{{opacity:1}}{100 / N:.3f}%{{opacity:0}}100%{{opacity:0}}}}</style>']
-    # drifting dashes in the background
-    o.append('<g fill="{}" opacity=".55">'.format("#b9b5ad" if t == "light" else "#3a414b") + "".join(
-        f'<rect x="{rnd.uniform(0, W):.0f}" y="{rnd.uniform(0, H):.0f}" width="{rnd.choice((4, 6, 8))}" height="1.6"/>'
-        for _ in range(140)) + '</g>')
+def frame_pixels(f, theme, polys):
+    bg = BG[theme]
+    pix, shadow = {}, set()
+    for k, poly in zip(KOI, polys):
+        gx, gy, ins, col, fin, body = sample_fish(k, poly, f)
+        cov = ins.mean(1)
+        for idx in np.nonzero(cov >= .2)[0]:
+            j = 0 if ins[idx, 0] else int(np.argmax(ins[idx]))
+            c = rgb(col[idx, j])
+            if fin[idx, j]:
+                c = mix(c, bg, 1 - FIN_ALPHA)
+            if cov[idx] < .8:
+                c = mix(c, bg, .35 if cov[idx] >= .45 else .65)
+            pix[(int(gx[idx]), int(gy[idx]))] = hx(c)
+            if body[idx].any():
+                shadow.add((int(gx[idx]) + 2, int(gy[idx]) + 3))
+    return pix, shadow
+
+
+def runs(cells):
+    """Merge horizontal runs into one stroked line each (stroke width = pixel size)."""
+    rows = {}
+    for (x, y) in cells:
+        rows.setdefault(y, []).append(x)
+    d = []
+    for y, xs in rows.items():
+        xs.sort()
+        start = prev = xs[0]
+        for x in xs[1:] + [None]:
+            if x is not None and x == prev + 1:
+                prev = x
+                continue
+            d.append(f"M{start * P} {y * P + P / 2:g}h{(prev - start + 1) * P}")
+            if x is not None:
+                start = prev = x
+    return "".join(d)
+
+
+def generate(theme):
+    polys = [loop_polyline(k) for k in KOI]
+    sc, so = SHADOW[theme]
+    out = [f'<style>.kf{{opacity:0;animation:kf {CYCLE}s steps(1,end) infinite}}'
+           f'@keyframes kf{{0%{{opacity:1}}{100 / N:.4f}%{{opacity:0}}100%{{opacity:0}}}}</style>']
     for f in range(N):
-        s = f / N
-        uses = []
-        for ki, k in enumerate(KOI):
-            fr = random.Random(ki * 1000 + 17)
-            for (gi, gj), (j, lat, edge) in sorted(frame_cells(k, s, ki).items()):
-                x, y = gi * S, gj * S
-                if x < -S or x > W or y < -S or y > H:
-                    continue
-                if j < 0:
-                    uses.append(f'<use href="#kt{eye}" x="{x}" y="{y}"/>')
-                    continue
-                cr = random.Random(ki * 7919 + j * 31 + int(lat * 3))
-                key = "f" if edge and cr.random() < .3 else colour(k, j % 200, lat, cr)
-                ch = CHARS[cr.randrange(len(CHARS))]
-                a = (0 if cr.random() < .5 else 1) if cr.random() < .06 else None
-                uses.append(f'<use href="#kt{sid[(key, ch, a)]}" x="{x}" y="{y}"/>')
-        o.append(f'<g class="kf" style="animation-delay:{f * CYCLE / N - CYCLE:.3f}s">{"".join(uses)}</g>')
-    return "".join(o)
+        pix, shadow = frame_pixels(f, theme, polys)
+        inb = lambda p: -1 <= p[0] <= W_ // P and -1 <= p[1] <= H_ // P
+        g = [f'<path d="{runs([p for p in shadow if inb(p)])}" stroke="{sc}" stroke-opacity="{so}"/>']
+        bycol = {}
+        for p, c in pix.items():
+            if inb(p):
+                bycol.setdefault(c, []).append(p)
+        for c, cells in bycol.items():
+            g.append(f'<path d="{runs(cells)}" stroke="{c}"/>')
+        out.append(f'<g class="kf" style="animation-delay:{f * CYCLE / N - CYCLE:.3f}s">{"".join(g)}</g>')
+    out.insert(1, f'<g fill="none" stroke-width="{P}" stroke-linecap="butt">')
+    out.append('</g>')
+    return "".join(out)
+
+
+def load(theme):
+    return open(os.path.join(OUT, f"koi-{theme}.frag"), encoding="utf-8").read()
+
+
+if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
+    for t in ("light", "dark"):
+        s = generate(t)
+        open(os.path.join(OUT, f"koi-{t}.frag"), "w", encoding="utf-8").write(s)
+        print(t, len(s))

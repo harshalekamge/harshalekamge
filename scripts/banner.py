@@ -83,9 +83,12 @@ text{{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size
 @keyframes ty{{0%{{transform:scaleX(0)}}30%,92%{{transform:scaleX(1)}}100%{{transform:scaleX(0)}}}}
 .cur{{animation:bl 1s steps(1) infinite}} @keyframes bl{{50%{{opacity:0}}}}
 </style>
-<rect width="{W}" height="{Hh}" fill="url(#bg)"/><rect width="{W}" height="{Hh}" fill="url(#g)"/>''')
+<rect width="{W}" height="{Hh}" fill="url(#bg)"/>''')
     import koi
-    a(koi.build(t))
+    a(koi.load(t))
+    # fine stitch grid over the water and the koi
+    a(f'<defs><pattern id="g5" width="{koi.P}" height="{koi.P}" patternUnits="userSpaceOnUse"><path d="M{koi.P} 0H0V{koi.P}" fill="none" stroke="{T['grid']}" stroke-width=".6"/></pattern></defs>'
+      f'<rect width="{W}" height="{Hh}" fill="url(#g5)"/>')
     # headline + card
     a(f'<defs><radialGradient id="haze" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="{T["bg1"]}" stop-opacity=".9"/><stop offset="1" stop-color="{T["bg1"]}" stop-opacity="0"/></radialGradient></defs>'
       '<ellipse cx="500" cy="250" rx="380" ry="190" fill="url(#haze)"/>')
