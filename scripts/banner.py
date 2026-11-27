@@ -84,12 +84,11 @@ text{{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size
 .cur{{animation:bl 1s steps(1) infinite}} @keyframes bl{{50%{{opacity:0}}}}
 </style>
 <rect width="{W}" height="{Hh}" fill="url(#bg)"/><rect width="{W}" height="{Hh}" fill="url(#g)"/>''')
-    fishes=[('kohaku',3,'swimR',28,-6,70,1),('showa',11,'swimR',36,-26,330,.85),('yamabuki',5,'swimL',32,-12,390,.8),('kohaku',21,'swimL',44,-30,120,.65)]
-    for kind,seed,sw,dur,delay,y,sc in fishes:
-        cells=fish_cells(seed,kind)
-        flip = 'scale(-1,1) ' if sw=='swimL' else ''
-        a(f'<g class="{sw}" style="animation-duration:{dur}s;animation-delay:{delay}s"><g transform="translate(0 {y})"><g class="sway" style="animation-delay:{delay/3:.1f}s"><g transform="{flip}scale({sc})">{fish(T,cells,seed,"f",kind)}</g></g></g></g>')
+    import koi
+    a(koi.build(t))
     # headline + card
+    a(f'<defs><radialGradient id="haze" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="{T["bg1"]}" stop-opacity=".9"/><stop offset="1" stop-color="{T["bg1"]}" stop-opacity="0"/></radialGradient></defs>'
+      '<ellipse cx="500" cy="250" rx="380" ry="190" fill="url(#haze)"/>')
     a(f'<text class="h" x="500" y="186">Dive into my code.</text>')
     a(f'<g filter="url(#sh)"><rect x="240" y="226" width="520" height="104" rx="18" fill="{T["card"]}" fill-opacity="{T["cardo"]}" stroke="{T["cstroke"]}"/></g>')
     a(f'<text class="q" x="266" y="272">What is Harsha building next?</text>')
