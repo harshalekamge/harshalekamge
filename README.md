@@ -1,17 +1,17 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-2026-11-27-3aadce-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./assets/profile-2026-11-27-3aadce-light.svg" />
-    <img src="./assets/profile-2026-11-27-3aadce-light.svg" width="100%" alt="Dive into my code. Many tools, one calm workflow. Things I have built." />
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-2026-11-28-e33302-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/profile-2026-11-28-e33302-light.svg" />
+    <img src="./assets/profile-2026-11-28-e33302-light.svg" width="100%" alt="Dive into my code. Many tools, one calm workflow. Things I have built." />
   </picture>
 </p>
 
 <p align="center">
   <a href="https://portfolio-kappa-azure-bhhoh68iit.vercel.app/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-2026-11-27-3aadce-dark.svg" />
-      <source media="(prefers-color-scheme: light)" srcset="./assets/footer-2026-11-27-3aadce-light.svg" />
-      <img src="./assets/footer-2026-11-27-3aadce-light.svg" width="100%" alt="Let's build something lasting. Visit portfolio.harshalekamge.com" />
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-2026-11-28-e33302-dark.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="./assets/footer-2026-11-28-e33302-light.svg" />
+      <img src="./assets/footer-2026-11-28-e33302-light.svg" width="100%" alt="Let's build something lasting. Visit portfolio.harshalekamge.com" />
     </picture>
   </a>
 </p>
@@ -51,8 +51,8 @@ https://portfolio.harshalekamge.com/
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/bottom-2026-11-27-3aadce-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./assets/bottom-2026-11-27-3aadce-light.svg" />
-    <img src="./assets/bottom-2026-11-27-3aadce-light.svg" width="100%" alt="Harsha Lekamge — Software Engineer, Data Science at SLIIT" />
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/bottom-2026-11-28-e33302-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/bottom-2026-11-28-e33302-light.svg" />
+    <img src="./assets/bottom-2026-11-28-e33302-light.svg" width="100%" alt="Harsha Lekamge — Software Engineer, Data Science at SLIIT" />
   </picture>
 </p>
